@@ -7,9 +7,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun DataItem(){
+fun DataItem(data:String){
     Text(
         modifier = Modifier.padding(vertical = 16.dp),
-        text = "Fab 2021"
+        text = data
     )
 }

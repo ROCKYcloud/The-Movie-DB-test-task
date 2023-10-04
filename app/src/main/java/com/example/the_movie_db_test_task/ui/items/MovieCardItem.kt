@@ -22,11 +22,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.the_movie_db_test_task.R
+import com.example.the_movie_db_test_task.data.model.discaver.Movie
 
 @Composable
 fun MovieCardItem(
-    textFirstBat: String,
-    textSecondBat: String,
+    movie: Movie,
+    textFirstBat: String = "LIke",
+    textSecondBat: String = "share",
     onClickFirstBut: () -> Unit,
     onClickSecondBut: () -> Unit
 ) {
@@ -43,7 +45,7 @@ fun MovieCardItem(
                         .padding(end = 16.dp)
                         .width(40.dp)
                         .height(40.dp),
-                    model = "",
+                    model = "https://image.tmdb.org/t/p/w500/${movie.backdropPath}",
                     contentDescription = "",
                     error = painterResource(R.drawable.ic_launcher_background),
                     placeholder = painterResource(id = R.drawable.ic_launcher_background),
@@ -55,24 +57,26 @@ fun MovieCardItem(
                     lineHeight = 24.sp,
                     fontWeight = FontWeight(500),
                     color = Color(0xDE000000),
-                    text = "4.1",
+                    text = movie.voteAverage.toString(),
                 )
             }
             Column() {
                 Text(
-                    text = "Filled",
+                    text = movie.title,
                     fontSize = 20.sp,
                     modifier = Modifier
                 )
                 Text(
-                    text = "American neo-noir black comedy crime film written and directed by Quentin Tarantino",
+                    text = movie.overview,
                     modifier = Modifier
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    TextButton(onClick = { onClickFirstBut() }) {
+                    TextButton(onClick = {
+                        onClickFirstBut()
+                    }) {
                         Text(
                             text = textFirstBat.uppercase(), modifier = Modifier
                         )
@@ -80,7 +84,6 @@ fun MovieCardItem(
                     TextButton(onClick = { onClickSecondBut() }) {
                         Text(
                             text = textSecondBat.uppercase(),
-
                             modifier = Modifier
                         )
                     }

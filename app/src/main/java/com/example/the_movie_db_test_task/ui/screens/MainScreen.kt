@@ -3,7 +3,10 @@ package com.example.the_movie_db_test_task.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.runtime.Composable
+import androidx.compose.material.Tab
+import androidx.compose.material.TabRow
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -37,6 +40,29 @@ fun MainScreen() {
                 contentScale = ContentScale.Crop
             )
         }
-        TabBar()
+
+        TabScreen()
+    }
+}
+
+@Composable
+fun TabScreen() {
+    var tabIndex by remember { mutableStateOf(0) }
+
+    val tabs = listOf("Films", "Favorite")
+
+    Column(modifier = Modifier.fillMaxWidth()) {
+        TabRow(selectedTabIndex = tabIndex) {
+            tabs.forEachIndexed { index, title ->
+                Tab(text = { Text(title) },
+                    selected = tabIndex == index,
+                    onClick = { tabIndex = index }
+                )
+            }
+        }
+        when (tabIndex) {
+            0 -> FilmsScreen()
+            1 -> FavouritesScreen()
+        }
     }
 }

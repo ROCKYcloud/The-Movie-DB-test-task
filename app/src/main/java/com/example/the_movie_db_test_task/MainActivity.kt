@@ -21,7 +21,9 @@ import com.example.the_movie_db_test_task.ui.theme.The_Movie_DB_test_taskTheme
 import com.example.the_movie_db_test_task.utils.Constants
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +44,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting() {
     Column(Modifier.padding(16.dp)) {
-
-        DataItem()
-        MovieCardItem(textFirstBat = "LIKE", textSecondBat = "Share", onClickFirstBut = {}, onClickSecondBut = {})
-        MovieCardItem(textFirstBat = "LIKE", textSecondBat = "Share", onClickFirstBut = {}, onClickSecondBut = {})
 
     }
 }
