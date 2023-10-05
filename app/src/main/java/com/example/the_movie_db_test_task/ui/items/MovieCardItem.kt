@@ -18,17 +18,19 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.the_movie_db_test_task.R
-import com.example.the_movie_db_test_task.data.model.discaver.Movie
+import com.example.the_movie_db_test_task.data.api.discaver.Movie
+import com.example.the_movie_db_test_task.utils.Constants
 
 @Composable
 fun MovieCardItem(
     movie: Movie,
     textFirstBat: String,
-    textSecondBat: String = "share",
+    textSecondBat: String = Constants.share,
     onClickFirstBut: () -> Unit,
     onClickSecondBut: () -> Unit
 ) {

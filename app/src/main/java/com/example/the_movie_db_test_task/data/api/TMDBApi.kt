@@ -1,6 +1,7 @@
 package com.example.the_movie_db_test_task.data
 
-import com.example.the_movie_db_test_task.data.model.discaver.ResponseMovie
+import com.example.the_movie_db_test_task.data.api.discaver.ResponseMovie
+import com.example.the_movie_db_test_task.data.model.BodyRequest
 import com.example.the_movie_db_test_task.utils.Constants
 import retrofit2.Response
 import retrofit2.http.Body
@@ -25,7 +26,7 @@ interface TMDBApi {
     @GET("account/{account_id}/favorite/movies")
     @Headers(Constants.API_TOKEN)
     suspend fun getFavorite(
-        @Path("account_id") accountId: Long = 20523672,
+        @Path("account_id") accountId: Int = Constants.accountId,
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1
     ): Response<ResponseMovie>
@@ -33,14 +34,8 @@ interface TMDBApi {
     @POST("account/{account_id}/favorite")
     @Headers(Constants.API_TOKEN)
     suspend fun postFavorite(
-        @Path("account_id") accountId: Long = 20523672,
+        @Path("account_id") accountId: Int = Constants.accountId,
         @Body request: BodyRequest
-
     ): Response<Map<String, Any>>
 }
 
-data class BodyRequest(
-    var media_type: String = "movie",
-    var media_id: Long,
-    var favorite: Boolean = true
-)

@@ -15,21 +15,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.the_movie_db_test_task.data.api.discaver.Movie
 import com.example.the_movie_db_test_task.ui.items.MovieCardItem
-import com.example.the_movie_db_test_task.ui.screens.favorites.FavoruritesViewModel
-import com.example.the_movie_db_test_task.ui.screens.favorites.SharedViewModel
+import com.example.the_movie_db_test_task.ui.items.UpdateUI
 import com.example.the_movie_db_test_task.utils.Constants
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun FavouritesScreen(viewModel: SharedViewModel = hiltViewModel()) {
-    val movieDB by remember { viewModel.movieDB }
+    val moviesDB by remember { viewModel.moviesDB }
     val isLoading by remember { viewModel.isLoading }
     val isError by remember { viewModel.isError }
-    val scroll = rememberLazyListState()
-    val isEmpty by remember { viewModel.isEmpty }
-    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isLoading)
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -37,46 +34,43 @@ fun FavouritesScreen(viewModel: SharedViewModel = hiltViewModel()) {
         verticalArrangement = Arrangement.Center
     ) {
         when {
-            isLoading -> {
-                CircularProgressIndicator(
-                    color = Color.Blue,
-                )
-            }
-            isError -> {
-                Text(text = "ERROR")
-                Button(
-                    onClick = {
-                        viewModel.getFavorites()
-                    }) {
-                    Text(text = "Update")
-                }
-            }
-            isEmpty -> {
-                Text(text = "EMPTY")
-                Button(
-                    onClick = {
-                        viewModel.getFavorites()
-                    }) {
-                    Text(text = "Update")
-                }
-            }
-            else -> {
-                SwipeRefresh(state = swipeRefreshState, onRefresh = { viewModel.getFavorites() }) {
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp), state = scroll
-                    ) {
-                        items(movieDB) { item ->
-                            MovieCardItem(
-                                movie = item,
-                                textFirstBat = Constants.remove,
-                                onClickSecondBut = {},
-                                onClickFirstBut = { viewModel.postFavorite(item) })
-                        }
-                    }
-                }
+            isLoading ->
+                CircularProgressIndicator(color = Color.Blue)
+
+            isError ->
+                UpdateUI(text = "Error") { viewModel.getFavorites() }
+
+            moviesDB.isEmpty() && isLoading.not() && isError.not() ->
+                UpdateUI(text = "Empty") { viewModel.getFavorites() }
+
+            else ->
+                MovieListFromDB(isLoading = isLoading, moviesDB = moviesDB, viewModel = viewModel)
+
+        }
+    }
+}
+
+@Composable
+fun MovieListFromDB(isLoading: Boolean, moviesDB: List<Movie>, viewModel: SharedViewModel) {
+    val scroll = rememberLazyListState()
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isLoading)
+    SwipeRefresh(state = swipeRefreshState, onRefresh = { viewModel.getFavorites() }) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp), state = scroll
+        ) {
+            items(
+                moviesDB,
+                Movie::id
+            ) { item ->
+                MovieCardItem(
+                    movie = item,
+                    textFirstBat = Constants.remove,
+                    onClickSecondBut = {},
+                    onClickFirstBut = { viewModel.postFavorite(item) })
             }
         }
     }
 }
+

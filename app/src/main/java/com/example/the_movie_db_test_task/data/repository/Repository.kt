@@ -1,9 +1,9 @@
 package com.example.the_movie_db_test_task.data.repository
 
-import com.example.the_movie_db_test_task.data.BodyRequest
 import com.example.the_movie_db_test_task.data.TMDBApi
-import com.example.the_movie_db_test_task.data.model.discaver.Movie
-import com.example.the_movie_db_test_task.data.model.discaver.ResponseMovie
+import com.example.the_movie_db_test_task.data.api.discaver.Movie
+import com.example.the_movie_db_test_task.data.api.discaver.ResponseMovie
+import com.example.the_movie_db_test_task.data.model.BodyRequest
 import com.example.the_movie_db_test_task.dataBase.MovieDao
 import com.example.the_movie_db_test_task.utils.Resource
 import javax.inject.Inject

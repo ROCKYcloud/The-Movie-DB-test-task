@@ -3,7 +3,7 @@ package com.example.the_movie_db_test_task.dbRoom
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
-import com.example.the_movie_db_test_task.data.model.discaver.Movie
+import com.example.the_movie_db_test_task.data.api.discaver.Movie
 import com.example.the_movie_db_test_task.dataBase.FavoriteMovieDataBase
 import com.example.the_movie_db_test_task.dataBase.MovieDao
 import junit.framework.TestCase

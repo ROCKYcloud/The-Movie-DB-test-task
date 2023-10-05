@@ -6,7 +6,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.the_movie_db_test_task.data.model.discaver.Movie
+import com.example.the_movie_db_test_task.data.api.discaver.Movie
 
 @Dao
 interface MovieDao {
