@@ -13,7 +13,6 @@ import retrofit2.http.Query
 
 interface TMDBApi {
     @GET("discover/movie")
-    @Headers(Constants.API_TOKEN)
     suspend fun getMovies(
         @Query("include_video") include_video: Boolean = true,
         @Query("include_adult") include_adult: Boolean = true,
@@ -24,7 +23,6 @@ interface TMDBApi {
     ): Response<ResponseMovie>
 
     @GET("account/{account_id}/favorite/movies")
-    @Headers(Constants.API_TOKEN)
     suspend fun getFavorite(
         @Path("account_id") accountId: Int = Constants.accountId,
         @Query("language") language: String = "en-US",
@@ -32,7 +30,6 @@ interface TMDBApi {
     ): Response<ResponseMovie>
 
     @POST("account/{account_id}/favorite")
-    @Headers(Constants.API_TOKEN)
     suspend fun postFavorite(
         @Path("account_id") accountId: Int = Constants.accountId,
         @Body request: BodyRequest
