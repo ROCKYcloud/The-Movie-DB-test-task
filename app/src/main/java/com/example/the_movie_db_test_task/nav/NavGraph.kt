@@ -1,14 +1,14 @@
-package com.example.the_movie_db_test_task.ui.screens
+package com.example.the_movie_db_test_task.nav
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.the_movie_db_test_task.ui.screens.AuthScreen
+import com.example.the_movie_db_test_task.ui.screens.MainScreen
 
 @Composable
-fun NavGraph(navController: NavHostController,
-    //         viewModel: SharedViewModel
-) {
+fun NavGraph(navController: NavHostController) {
     NavHost(navController, startDestination = Graph.AUTH_SCREEN.route) {
         composable(Graph.AUTH_SCREEN.route) {
             AuthScreen(){

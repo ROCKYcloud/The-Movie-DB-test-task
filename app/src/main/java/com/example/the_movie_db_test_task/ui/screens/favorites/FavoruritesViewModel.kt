@@ -1,4 +1,4 @@
-package com.example.the_movie_db_test_task.ui.screens
+package com.example.the_movie_db_test_task.ui.screens.favorites
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -34,45 +34,28 @@ class FavoruritesViewModel @Inject constructor(
         isError.value = false
     }
 
-    private  fun error() {
+    private suspend fun error() {
         isLoading.value = false
         isError.value = true
+        movie.value = repository.getMoviesFromDB() as MutableList<Movie>
     }
 
     fun getFavorites() {
         viewModelScope.launch {
-            isLoading.value = true
-            when (val result = repository.getFavorites()) {
-                is Resource.Loading -> {
-                    loading()
-                }
-                is Resource.Success -> {
-                    isLoading.value = false
-                    isError.value = false
-                    curPage++
-                    isEmpty.value = result.data!!.results.isEmpty()
-                    movie.value = result.data.results as MutableList<Movie>
-                }
-                is Resource.Error -> {
-                    error()
-                }
-            }
+            isEmpty.value = repository.getMoviesFromDB().isEmpty()
+            movie.value = repository.getMoviesFromDB() as MutableList<Movie>
         }
     }
 
-    fun postFravorite(movieId: Long, isAddToFavorite: Boolean) {
+    fun postFravorite(movieItem: Movie, isAddToFavorite: Boolean) {
         viewModelScope.launch {
-            // isLoading.value = true
-            when (val result = repository.postFavorites(movieId, isAddToFavorite)) {
-                is Resource.Loading -> {
-                    Log.d("result", "Loading")
-                }
+            when (repository.postFavorites(movieItem.id, isAddToFavorite)) {
                 is Resource.Success -> {
-                    Log.d("result", "Secsses")
-                    getFavorites()
+                    repository.deleteDeviseFromDB(movieItem)
+                    movie.value = repository.getMoviesFromDB() as MutableList<Movie>
                 }
                 is Resource.Error -> {
-                    Log.d("result", "Error")
+                    error()
                 }
             }
         }

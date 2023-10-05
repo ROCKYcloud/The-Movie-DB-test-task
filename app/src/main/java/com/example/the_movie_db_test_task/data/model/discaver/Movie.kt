@@ -1,5 +1,7 @@
 package com.example.the_movie_db_test_task.data.model.discaver
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 data class ResponseMovie(
@@ -11,7 +13,11 @@ data class ResponseMovie(
     var totalResults: Int? = null
 )
 
+@Entity(
+    tableName = "movies"
+)
 data class Movie(
+    @PrimaryKey
     var id: Long,
 //    var adult: Boolean? = null,
     @SerializedName("backdrop_path")

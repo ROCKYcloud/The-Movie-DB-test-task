@@ -1,5 +1,6 @@
 package com.example.the_movie_db_test_task.ui.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -14,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.the_movie_db_test_task.R
+import com.example.the_movie_db_test_task.data.model.discaver.Movie
 import com.example.the_movie_db_test_task.ui.items.TabBar
 import com.example.the_movie_db_test_task.ui.theme.Purple500
 
@@ -45,11 +47,12 @@ fun MainScreen() {
     }
 }
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun TabScreen() {
     var tabIndex by remember { mutableStateOf(0) }
-
     val tabs = listOf("Films", "Favorite")
+    var movieDB = mutableStateOf<MutableList<Movie>>(mutableListOf())
 
     Column(modifier = Modifier.fillMaxWidth()) {
         TabRow(selectedTabIndex = tabIndex) {

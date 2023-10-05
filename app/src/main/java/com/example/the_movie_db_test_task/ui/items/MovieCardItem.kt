@@ -27,7 +27,7 @@ import com.example.the_movie_db_test_task.data.model.discaver.Movie
 @Composable
 fun MovieCardItem(
     movie: Movie,
-    textFirstBat: String = "LIke",
+    textFirstBat: String,
     textSecondBat: String = "share",
     onClickFirstBut: () -> Unit,
     onClickSecondBut: () -> Unit
